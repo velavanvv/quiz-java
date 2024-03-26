@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlms:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{css/Home.css}">
+</head>
+<body>
+ 
+
+   <ol  th:each="option:${questions}">
+      <form th:action="@{'/user/'+ ${option.questionNo}}" method="get">    
+      <h1 th:text="${option.question}" >Question</h1>
+
+      <li ><input type="submit"   name="selectedOption" th:value="${option.option1}"></li>
+      <li ><input type="submit"  name="selectedOption" th:value="${option.option2}"></li>
+      <li ><input type="submit"  name="selectedOption" th:value="${option.option3}"></li>
+
+   </form>
+   </ol>
+
+</body>
+</html>
