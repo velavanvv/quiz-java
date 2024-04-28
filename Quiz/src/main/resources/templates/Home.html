@@ -1,24 +1,133 @@
 <!DOCTYPE html>
 <html xmlms:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="" th:href="@{css/Home.css}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <!--    <link rel="stylesheet" type="text/css" href="" th:href="@{css/Home.css}"> -->
 </head>
+
 <body>
- 
+   
+  <span sec:authorize="isAuthenticated">
+    <a th:href="@{/logout}">
+     Logout
+    
+    </a>
+    
+    </span>
+  <div id="timer">time Remaining:<span id="time">10:00
+    </span></div>
 
-   <ol  th:each="option:${questions}">
-      <form th:action="@{'/user/'+ ${option.questionNo}}" method="get">    
-      <h1 th:text="${option.question}" >Question</h1>
 
-      <li ><input type="submit"   name="selectedOption" th:value="${option.option1}"></li>
-      <li ><input type="submit"  name="selectedOption" th:value="${option.option2}"></li>
-      <li ><input type="submit"  name="selectedOption" th:value="${option.option3}"></li>
 
-   </form>
-   </ol>
+  <ol id="questions" style="list-style-type: none;"></ol>
+  <h1 id="quest"></h1>
+  <input type="submit" onclick="quiz()">;
+  <script th:inline="javascript">
+    const timerDuration = 1 * 60;
+    let countdown;
+    let timerElement = document.getElementById('time');
+    function timer() {
+      let timeLeft = timerDuration;
 
+      countdown = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        if (seconds < 10) {
+          seconds = '0' + seconds;
+        }
+
+        timerElement.textContent = `${minutes}:${seconds}`;
+        timeLeft--;
+        if (timeLeft < 0) {
+          quiz();
+          clearInterval(countdown);
+          timerElement.textContent = "times/up";
+          
+        }
+
+
+      }, 1000);
+    }
+    timer();
+
+    fetch('/user/questions')
+      .then(response => { return response.json(); })
+      .then(data => {
+        var list = document.getElementById("questions");
+
+        console.log(data[0].question);
+        localStorage.setItem("data", JSON.stringify(data));
+
+        for (let i = 0; i < data.length; i++) {
+
+          const question = document.createElement("h1");
+          const questions = document.createElement("label");
+          const option1 = document.createElement("li");
+          const option2 = document.createElement("li");
+          const option3 = document.createElement("li");
+          const answer = document.createElement("h1");
+
+          option1.innerHTML = "<input type='radio' name='question" + i + "' value=" + data[i].option1 + ">" + data[i].option1 + "<br>";
+          option2.innerHTML = "<input type='radio' name='question" + i + "' value=" + data[i].option2 + ">" + data[i].option2 + "<br>";
+          option3.innerHTML = "<input type='radio' name='question" + i + "' value=" + data[i].option3 + ">" + data[i].option3 + "<br>";
+          answer.innerHTML = "<span id='answer" + i + "'></span>"
+          question.innerHTML = data[i].question;
+          list.appendChild(question);
+          list.appendChild(option1);
+          list.appendChild(option2);
+          list.appendChild(option3);
+          list.appendChild(answer);
+
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    const quiz = () => {
+
+      clearInterval(countdown);
+      timerElement.textContent = "thanks for atten this quiz";
+
+      let data = localStorage.getItem("data");
+      data = JSON.parse(data);
+      for (let i = 0; i < data.length; i++) {
+        console.log(select("question" + i, data[i].answer, "answer" + i));
+      }
+    }
+    function select(questionName, datas, answ) {
+      console.log(datas);
+      var name = document.getElementsByName(questionName);
+      var answer = document.getElementById(answ);
+
+
+      for (var i = 0; i < name.length; i++) {
+
+        if (name[i].checked) {
+          console.log(name[i])
+          if (name[i].value == datas) {
+
+            answer.style.backgroundColor = "green";
+            answer.textContent = "correct";
+            return 1;
+          }
+
+          else {
+            answer.style.backgroundColor = "red";
+            answer.textContent = "worng";
+
+            return 0;
+          }
+        }
+
+      } return 0;
+
+    }
+
+  </script>
 </body>
+
 </html>

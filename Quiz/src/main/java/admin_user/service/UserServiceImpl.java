@@ -18,9 +18,15 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Override
-	public UserEntity save(UserDto userDto) {
+	public boolean save(UserDto userDto) {
+		UserEntity check=userRepository.findByEmail(userDto.getEmail());
+		if(check == null){
 		UserEntity user = new UserEntity(userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()) , userDto.getRole(), userDto.getFullname());
-		return userRepository.save(user);
+		 userRepository.save(user);
+	return true;
+		}
+	else{
+		return false;
 	}
-
+	}
 }

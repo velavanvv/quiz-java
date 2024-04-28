@@ -35,7 +35,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		
-		http.csrf(c -> c.disable())
+		http.csrf(c -> c.disable())//cross site request forgery
 		
 		.authorizeHttpRequests(request -> request.requestMatchers("/admin/**")
 				.hasAuthority("ADMIN").requestMatchers("/user/**").hasAuthority("USER")

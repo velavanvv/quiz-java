@@ -8,33 +8,91 @@
 </head>
 <body>
     <div class="container">
-        <div class="message" th:if="${message != null}">
-           [[${message}]]
+        <div class="message" id="message">
+     
         </div>
         <h2>Registration Form</h2>
-        <form 
-         th:action="@{/registration}"
-         method="post"
-         role="form"
-         th:object="${user}"
-        >
+        <form   id="registerform">
+<!--      th:action="@{/registration}"  method="post"  role="form" th:object="${user}"  -->
+  
+        
             <div class="form-group">
                 <label for="fullname">Fullname:</label>
-                <input th:field="*{fullname}" type="text" id="fullname" name="fullname" placeholder="Enter your fullname" required>
+                <input type="text" id="fullname" name="fullname" placeholder="Enter your fullname" required>
             </div>
             
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input th:field="*{email}" type="email" id="email" name="email" placeholder="Enter your email" required>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
             </div>
             
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input th:field="*{password}" type="password" id="password" name="password" placeholder="Enter your password" required>
+                <input  type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
-            <input type="submit" value="Register">
+       
+              
+              
+            
+            
+            <input type="submit" value="Register"><br>
+            <a href="" th:href="@{/login}">Login page</a><br>
         </form>
         
     </div>
+    <script th:inline="javascript">
+
+const signupForm = document.getElementById("registerform");
+
+signupForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const usernameInput = document.getElementById("fullname");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+  
+
+
+    const username = usernameInput.value;
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+   
+    const data = { fullname: username, password: password, email: email, role: "USER"};
+    console.log(data);
+
+        fetch("/registration", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+    
+
+             .then(res =>{ return res.json()})
+            .then(data => {
+                console.log(data)
+                if (data.success) {
+                    var top=document.getElementById("message");
+var message=document.createElement("h2");
+message.textContent="RegistrationSucces";
+top.appendChild(message);
+
+                   /*  setTimeout(() => {
+                        window.location.href = "/login"
+                    }, 1000) */
+                } else {
+                   
+                   var top=document.getElementById("message");
+var message=document.createElement("h2");
+message.textContent="user alerdy exits";
+top.appendChild(message);
+               
+                }
+
+            });
+
+
+});
+    </script>
 </body>
 </html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="timer">time Remaining:<span id="time">10:00
+        </span></div>
+    <form>
+        <h1>Welcome to my quiz</h1>
+        <label>1. Which keyword is used to define a class in Java?</label><br>
+        <ol>
+            <li><input type="radio" name="pm" value="class">class <br></li>
+            <li><input type="radio" name="pm" value="define">define <br></li>
+            <li><input type="radio" name="pm" value="struct">struct <br></ll>
+            <li><input type="radio" name="pm" value="d">Class <br></li>
+            <small id="answer"></small><br>
+        </ol>
+        <br>
+
+        <label>2. What is the main feature of Java?</label><br>
+        <ol>
+            <li><input type="radio" name="2" value="correct">portablity <br></li>
+            <li><input type="radio" name="2" value="define">complexity <br></li>
+            <li><input type="radio" name="2" value="struct">Hardware dependency <br></ll>
+            <li><input type="radio" name="2" value="d">speed <br></li>
+            <small id="answer2"></small><br>
+        </ol>
+        <br>
+        <label>3. What is the result of 5 + 7 * 2?</label><br>
+        <ol>
+            <li><input type="radio" name="3" value="cor">27 <br></li>
+            <li><input type="radio" name="3" value="correct">19<br></li>
+            <li><input type="radio" name="3" value="struct">30 <br></ll>
+            <li><input type="radio" name="3" value="d">32 <br></li>
+            <small id="answer3"></small><br>
+        </ol>
+        <br>
+        <label>4. Which keyword is used to define a method that does not return any value in Java?</label><br>
+        <ol>
+            <li><input type="radio" name="4" value="cor">null <br></li>
+            <li><input type="radio" name="4" value="cor">this <br></li>
+            <li><input type="radio" name="4" value="correct">void <br></ll>
+            <li><input type="radio" name="4" value="d">continue <br></li>
+            <small id="answer4"></small><br>
+        </ol>
+        <br>
+        <label>5. What is the superclass of all classes in Java??</label><br>
+        <ol>
+            <li><input type="radio" name="5" value="cor"> super<br></li>
+            <li><input type="radio" name="5" value="correct">object <br></li>
+            <li><input type="radio" name="5" value="cor">base <br></ll>
+            <li><input type="radio" name="5" value="d">class <br></li>
+            <small id="answer5"></small><br>
+        </ol>
+        <br>
+        <h1 id="tol" style="text-align: center;"></h1> <br>
+        <center><button>reset</button></center>
+    </form>
+    <center>
+        <button onclick="quiz()">click</button>
+    </center>
+    <script type="text/javascript">
+  const timerDuration = 10 * 60;
+let countdown;
+let timerElement = document.getElementById('time');
+  function timer(){
+let timeLeft = timerDuration;
+
+ countdown = setInterval(() => {
+    const minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    if (seconds < 10) {
+        seconds = '0' + seconds;
+    }
+
+    timerElement.textContent = `${minutes}:${seconds}`;
+    timeLeft--;
+    if (timeLeft < 0) {
+        clearInterval(countdown);
+        timerElement.textContent = "times/up";
+    }
+
+
+}, 1000);}
+timer();
+        const quiz = () => {
+
+            clearInterval(countdown);
+        timerElement.textContent = "thanks for atten this quiz";
+            var tol = document.getElementById("tol");
+            var num = 0;
+            num = num + select("pm", "answer", "class");
+            num = num + select("2", "answer2", "correct");
+            num = num + select("3", "answer3", "correct");
+            num = num + select("4", "answer4", "correct");
+            num = num + select("5", "answer5", "correct");
+            tol.textContent = "Your score :" + num + "/5";
+        }
+        function select(questionName, answer, optionAnswer) {
+
+            var name = document.getElementsByName(questionName);
+            var answ = document.getElementById(answer);
+
+
+            for (var i = 0; i < name.length; i++) {
+                if (name[i].checked) {
+                    if (name[i].value == optionAnswer) {
+                        answ.style.backgroundColor = "green";
+                        answ.textContent = "correct";
+                        return 1;
+                    }
+
+                    else {
+                        answ.style.backgroundColor = "Red";
+                        answ.textContent = "Wrong";
+                        return 0;
+                    }
+                }
+               
+            }return 0;
+
+        }
+
+    </script>
+</body>
+
+</html>

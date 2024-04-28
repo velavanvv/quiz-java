@@ -1,5 +1,7 @@
 package admin_user.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +12,7 @@ public class QuestionEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonProperty("questionNo")
     private int questionNo;
     
     public QuestionEntity(int questionNo, String question, String option1, String option2, String option3,String answer) {
@@ -27,8 +30,14 @@ public class QuestionEntity {
         this.option3 = option3;
         this.answer=answer;
     }
+
+    @JsonProperty("question")
     private String question;
+    
+    @JsonProperty("option1")
     private String option1;
+
+    @JsonProperty("answer")
     private String answer;
    
     public QuestionEntity() {
@@ -74,7 +83,10 @@ public class QuestionEntity {
     public void setOption3(String option3) {
         this.option3 = option3;
     }
+    @JsonProperty("option2")
     private String option2;
+
+    @JsonProperty("option3")
     private String option3;
 
 
