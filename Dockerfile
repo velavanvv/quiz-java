@@ -1,5 +1,7 @@
 # Use an official Maven runtime as a parent image with JDK 17
-FROM maven:3.8.1-openjdk-17-slim as build
+FROM maven:3.8.5-openjdk-17 as build
+COPY . .
+RUN mvn clean package -DskipTests
 
 
 
