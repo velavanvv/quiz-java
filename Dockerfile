@@ -15,7 +15,7 @@ FROM openjdk:17.0.1-jdk-slim
 VOLUME /tmp
 
 # Copy the jar file from the build stage
-COPY target/ascii-art-generator-0.0.1-SNAPSHOT.jar ascii-art-generator.jar
+COPY target/codingtechniques_tutorial-0.0.1-SNAPSHOT.jar codingtechniques_tutorial.jar
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "/ascii-art-generator.jar"]
+ENTRYPOINT ["java", "-jar", "/codingtechniques_tutorial.jar"]
