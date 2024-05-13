@@ -12,7 +12,7 @@ RUN mvn clean package -DskipTests
 
 # Use an official Java runtime as a parent image with JDK 17
 FROM openjdk:17.0.1-jdk-slim
-VOLUME /tmp
+
 
 # Copy the jar file from the build stage
 COPY target/codingtechniques_tutorial-0.0.1-SNAPSHOT.jar codingtechniques_tutorial.jar
